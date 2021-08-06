@@ -31,8 +31,6 @@ def set_variables():
 
 def main() -> None:
 
-
-
     mainWindow = tk.Tk()
     mainWindow.geometry("600x400")
 
