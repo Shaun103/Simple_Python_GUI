@@ -1,83 +1,156 @@
 import tkinter as tk
+from tkinter import *
+from random import randint
 
 class BankAccount:
-    def __init__(self, first_name='xxxxxx', last_name='xxxxxx', type='xxxxxx', number=0, interestRate=0):
-        self.accFirstName = first_name
-        self.accLastName = last_name
-        self.accType = type
-        self.accNumber = number
-        self.accInterestRate = interestRate
+    def __init__(self, first_name='xxxxxx', last_name='xxxxxx', type='xxxxxx', number=0, interestRate=0, accBalance=0):
+        self.first = first_name
+        self.last = last_name
+        self.myType = type
+        self.interest = interestRate
+        self.balance = accBalance
 
-# creating instances of the class
-a = BankAccount() 
+    def deposit(self, amount):
+        self.balance += amount
+    def withdraw(self, amount):
+        self.balance -= amount
+    def get_balance(self):
+        return self.get_balance() * self.accInterest  
 
-def set_variables():
+class GUI(Tk):
+    def __init__(self):
+        Tk.__init__(self)
 
-    first = a.accFirstName.get()
-    last = a.accLastName.get()
-    type = a.accType.get()
-    number = a.accNumber.get()
-    interestRate = a.accInterestRate.get()
+        self.title('Bank Account')
+        # screen size
+        self.geometry("600x400")
+        self.title('Bank Account')
+
+        # menu
+        menu = Menu(self)
+        acct_type_menu = Menu(menu)
+        menu.add_cascade(label='Account Type', menu=acct_type_menu)
+        acct_type_menu.add_command(label='Standard', command=self.set_type_standard)
+        self.config(menu=menu)
+
+        # account
+        start_balance = randint(100, 500)
+        self.acct = BankAccount(start_balance)
+
+        # first name label
+        self.first_label = Label(text='First Name', font=('Times New Roman',10,'normal', 'bold'))
+        self.first_label.pack()
+        # first name entry
+        self.first_entry = Entry(font=('Times New Roman',10,'normal', 'bold'))  
+        self.first_entry.pack()
+
+        # last name label
+        self.last_label = Label(text='Last Name', font=('Times New Roman',10,'bold'))
+        self.last_label.pack()
+        # last name entry
+        self.last_entry = Entry(font=('Times New Roman',10,'normal', 'bold'))
+        self.last_entry.pack()
+
+        # account type label
+        self.type_label = Label(text='Account Type', font=('Times New Roman',10,'bold'))
+        self.type_label.pack()
+
+        # account type entry
+        self.type_entry = Entry(font=('Times New Roman',10,'normal', 'bold'))
+        self.type_entry.pack()
+
+        # account number label
+        self.number_label = Label(text='Account Number', font=('Times New Roman',10,'bold'))
+        self.number_label.pack()
+
+        # account number entry
+        self.number_entry = Entry(font=('Times New Roman',10,'normal', 'bold'))
+        self.number_entry.pack()
+
+        # interest rate label
+        self.interest_label = Label(text='Interest Rate', font=('Times New Roman',10,'bold'))
+        self.interest_label.pack()
+
+        # interest rate entry
+        self.interest_entry = Entry(font=('Times New Roman',10,'normal', 'bold'))
+        self.interest_entry.pack()
+
+        # button
+        btns_frame = Frame(self)
+        btns_frame.pack()
     
-    # checking variables 
-    print("First name: ", first)
-    print("Last name: ", last)
-    print("Account type: ", type)
-    print("Account number: ", number)
-    print("Account interest rate: ", interestRate)
-    return (
-        first, last, type, number, interestRate
-    )
+        # button deposit
+        Button(btns_frame, text='Deposit', width=13, command=self.deposit).pack(side=LEFT)
+        
+        # button withdraw
+        Button(btns_frame, text='Withdraw', width=13, command=self.withdraw).pack(side=RIGHT)
+        
+        # button submit
+        Button(btns_frame, text='Submit', width=13, command=self.set_variables).pack()
 
-def main() -> None:
 
-    mainWindow = tk.Tk()
-    mainWindow.geometry("600x400")
+        Label(self, text='Current Balance:').pack()
+        Label(self, text='Enter amount below:').pack()
+        
+        # default account label
+        self.balance_label = Label(self, text='Error: Select account type')
+        self.balance_label.pack()
 
-    # class variables that tkinter with manipulate 
-    a.accFirstName=tk.StringVar() # string
-    a.accLastName=tk.StringVar()
-    a.accType=tk.StringVar()
-    a.accNumber=tk.IntVar() # integers
-    a.accInterestRate=tk.DoubleVar() # double
-
-    # assigning what is in labels and fields
-    first_name_label = tk.Label(mainWindow, text='First name', font=('Times New Roman',10, 'bold'))
-    first_name_entry = tk.Entry(mainWindow, textvariable = a.accFirstName, font=('Times New Roman',10,'normal'))
-
-    last_name_label = tk.Label(mainWindow, text='Last name', font=('Times New Roman',10, 'bold'))
-    last_entry = tk.Entry(mainWindow, textvariable = a.accLastName, font=('Times New Roman',10,'normal'))
-
-    type_label = tk.Label(mainWindow, text='Account Type', font=('Times New Roman',10, 'bold'))
-    type_entry = tk.Entry(mainWindow, textvariable = a.accType, font=('Times New Roman',10,'normal'))
-
-    number_label = tk.Label(mainWindow, text='Account number', font=('Times New Roman',10, 'bold'))
-    number_entry = tk.Entry(mainWindow, textvariable = a.accNumber, font=('Times New Roman',10,'normal'))
-
-    interest_label = tk.Label(mainWindow, text='Interest rate', font=('Times New Roman',10, 'bold'))
-    interest_entry = tk.Entry(mainWindow, textvariable = a.accInterestRate, font=('Times New Roman',10,'normal'))
-
-    sub_btn=tk.Button(mainWindow,text='Show', command=set_variables) # when button clicked
-
-    # displaying fields labels
-    first_name_label.grid(row=0,column=0)
-    first_name_entry.grid(row=0,column=1)
-
-    last_name_label.grid(row=1,column=0)
-    last_entry.grid(row=1,column=1)
-
-    type_label.grid(row=2,column=0)
-    type_entry.grid(row=2,column=1)
-
-    number_label.grid(row=3,column=0)
-    number_entry.grid(row=3,column=1)
-
-    interest_label.grid(row=4,column=0)
-    interest_entry.grid(row=4,column=1)
+        # textbox - withdraw/deposit
+        self.text = Entry(self)
+        self.text.pack()
     
-    sub_btn.grid(row=5,column=1)
+    # bank account type 
+    def set_type_standard(self):    
+        self.acct_type = 'standard'
+        self.balance_label.config(text=self.acct.balance)
 
-    tk.mainloop()
+    # clears default "Error account type"
+    def clear_entry(self):
+        self.text.delete(0, END)
 
-if __name__ == "__main__":
-    main()
+    def deposit(self): 
+        if self.acct_type == 'standard':
+            a = int(self.text.get())
+            self.acct.balance += a
+            self.balance_label.config(text=self.acct.balance)
+            print('..amount deposited')
+        else:
+            self.balance_label.config(text='Error: Select account type')
+        self.clear_entry()
+
+    def withdraw(self):
+        a = int(self.text.get())
+        if self.acct_type == 'standard': 
+            if self.acct.balance < a:
+                print('..insufficient funds')
+            else:  
+                self.acct.balance -= a
+                self.balance_label.config(text=self.acct.balance)
+                print('..amount withdrawn')
+        else:
+            self.balance_label.config(text='Error: Select account type')
+        self.clear_entry()
+
+    # sets object class 
+    def set_variables(self):
+        first = str(self.first_entry.get())
+        self.acct.first = first
+        last = str(self.last_entry.get())
+        self.acct.last = last
+        type = str(self.type_entry.get())
+        self.acct.type = type
+        number = int(self.number_entry.get())
+        self.acct.number = number
+        interest = float(self.interest_entry.get())
+        self.acct.interestRate = interest
+
+        # error/bug checking
+        print("First name: ", first)
+        print("Last name: ", last)
+        print("Account type: ", type)
+        print("Account number: ", number)
+        print("Account interest rate: ", interest) 
+
+if __name__ == '__main__':
+    GUI().mainloop()
