@@ -39,66 +39,61 @@ class GUI(Tk):
 
         # first name label
         self.first_label = Label(text='First Name', font=('Times New Roman',10,'normal', 'bold'))
-        self.first_label.pack()
+        self.first_label.grid(row=0,column=0)
         # first name entry
         self.first_entry = Entry(font=('Times New Roman',10,'normal', 'bold'))  
-        self.first_entry.pack()
+        self.first_entry.grid(row=0,column=1)
 
         # last name label
         self.last_label = Label(text='Last Name', font=('Times New Roman',10,'bold'))
-        self.last_label.pack()
+        self.last_label.grid(row=1,column=0)
         # last name entry
         self.last_entry = Entry(font=('Times New Roman',10,'normal', 'bold'))
-        self.last_entry.pack()
+        self.last_entry.grid(row=1,column=1)
 
         # account type label
         self.type_label = Label(text='Account Type', font=('Times New Roman',10,'bold'))
-        self.type_label.pack()
-
+        self.type_label.grid(row=2,column=0)
         # account type entry
         self.type_entry = Entry(font=('Times New Roman',10,'normal', 'bold'))
-        self.type_entry.pack()
+        self.type_entry.grid(row=2,column=1)
 
         # account number label
         self.number_label = Label(text='Account Number', font=('Times New Roman',10,'bold'))
-        self.number_label.pack()
-
+        self.number_label.grid(row=3,column=0)
         # account number entry
         self.number_entry = Entry(font=('Times New Roman',10,'normal', 'bold'))
-        self.number_entry.pack()
+        self.number_entry.grid(row=3,column=1)
 
         # interest rate label
         self.interest_label = Label(text='Interest Rate', font=('Times New Roman',10,'bold'))
-        self.interest_label.pack()
-
+        self.interest_label.grid(row=4,column=0)
         # interest rate entry
         self.interest_entry = Entry(font=('Times New Roman',10,'normal', 'bold'))
-        self.interest_entry.pack()
+        self.interest_entry.grid(row=4,column=1)
 
         # button
         btns_frame = Frame(self)
-        btns_frame.pack()
+        btns_frame.grid(row=1,column=1)
     
-        # button deposit
-        Button(btns_frame, text='Deposit', width=13, command=self.deposit).pack(side=LEFT)
-        
-        # button withdraw
-        Button(btns_frame, text='Withdraw', width=13, command=self.withdraw).pack(side=RIGHT)
-        
         # button submit
-        Button(btns_frame, text='Submit', width=13, command=self.set_variables).pack()
+        Button(text='Submit', width=10, command=self.set_variables).grid(row=0,column=3)
 
-
-        Label(self, text='Current Balance:').pack()
-        Label(self, text='Enter amount below:').pack()
+        # button withdraw
+        Button(text='Withdraw', width=10, command=self.withdraw).grid(row=1,column=3)
+        
+        # button deposit
+        Button(text='Deposit', width=10, command=self.deposit).grid(row=2,column=3)
+        
+        Label(self, text='Current Balance:').grid(row=0,column=4)
         
         # default account label
         self.balance_label = Label(self, text='Error: Select account type')
-        self.balance_label.pack()
+        self.balance_label.grid(row=1,column=4)
 
         # textbox - withdraw/deposit
         self.text = Entry(self)
-        self.text.pack()
+        self.text.grid(row=2,column=4)
     
     # bank account type 
     def set_type_standard(self):    
